@@ -3,32 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Numerics;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace oopCS
 {
-    internal class Employee
+    internal class Employee : Person
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Gender { get; set; }
-        public DateTime Dob { get; set; }
         public string Branch { get; set; }
-        public decimal Ral { get; set; }
-        public string Level { get; set; }
-
-        public Employee(string id, string name, string surname, string gender, DateTime dob, string? branch, string? ral, string? level)
+        public decimal? Ral { get; set; }
+        public ExperienceLevels? Level { get; set; }
+        public Employee(string name, string surname, int year, int month, int day, string? branch) : base(name, surname, year, month, day)
         {
-            Id = int.Parse(id);
-            Name = name;
-            Surname = surname;
-            Dob = dob;
-            Gender = gender;
             Branch = branch ?? string.Empty;
-            Ral = string.IsNullOrEmpty(ral) ? 0 : decimal.Parse(ral);
-            Level = level ?? string.Empty;
         }
+        public override string ToString()
+        {
+            return "Impiegato" + " " + base.ToString() + ", " + Branch;
+        }
+        public override string Welcome()
+        {
+            return "Benvenuto " + Name + " " + Surname + ", sei un impiegato dimmerda, coglione.";
+        }
+    }
+    public enum ExperienceLevels
+    {   
+        Apprentice,
+        Junior,
+        Middle,
+        Senior,
+        Manager,
+        Director
     }
 }
